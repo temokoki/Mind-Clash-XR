@@ -287,7 +287,7 @@
             </Button>
             <Button id="Btn_Game_Rope" class="game-card">
               <div class="game-card-inner">
-                <img id="Thumb_0" src="/ui/rope-untangle.jpg" class="card-thumb-img" />
+                <img id="Thumb_0" src="./ui/rope-untangle.jpg" class="card-thumb-img" />
                 <div class="game-title">Rope Untangle</div>
                 <div class="game-sub">Untangle crossing 3D ropes</div>
               </div>
