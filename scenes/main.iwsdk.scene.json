@@ -1,0 +1,54 @@
+{
+  "version": "iwsdk.scene.v1",
+  "units": "meters",
+  "components": {
+    "com.iwsdk.components.IBLGradient": {
+      "sky": [0.92, 0.95, 1.0, 1],
+      "equator": [0.75, 0.8, 0.88, 1],
+      "ground": [0.35, 0.38, 0.44, 1],
+      "intensity": 0.35
+    }
+  },
+  "environment": {
+    "toneMapping": "aces",
+    "exposure": 1,
+    "shadows": true,
+    "shadowMapType": "pcf"
+  },
+  "resources": {},
+  "nodes": [
+    {
+      "id": "shadow-catcher",
+      "name": "Shadow Catcher",
+      "framingRole": "support",
+      "transform": {
+        "position": [0, 0.001, -0.6]
+      },
+      "components": {
+        "ShadowCatcher": {
+          "size": [4, 4],
+          "opacity": 0.25
+        }
+      }
+    },
+    {
+      "id": "hub-panel",
+      "name": "Mind Clash Hub Panel",
+      "content": {
+        "type": "asset",
+        "asset": "hub-panel"
+      },
+      "transform": {
+        "position": [0, 1.2, -1.02],
+        "rotationDeg": [0, 0, 0],
+        "scale": 0.095
+      },
+      "components": {
+        "RayInteractable": {}
+      }
+    }
+  ],
+  "authoring": {
+    "views": []
+  }
+}

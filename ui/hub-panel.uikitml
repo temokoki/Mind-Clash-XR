@@ -1,0 +1,597 @@
+<!--
+  Mind Clash XR - Spatial Hub & Multiplayer Invite Panel
+  Horizon kit + Lucide icons, opaque when expanded, 50% when minimized,
+  scrollable game grid, spatial virtual keyboard for nickname & room code entry.
+-->
+<style>
+  .hub-root {
+    flex-direction: column;
+    width: 880px;
+    padding: 18px;
+    gap: 12px;
+    opacity: 1;
+  }
+
+  .hub-body {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .row {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title-col {
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 2px;
+  }
+
+  .brand-title {
+    color: #f8fafc;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .brand-subtitle {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .heading {
+    color: #18181b;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .heading:dark {
+    color: #f8fafc;
+  }
+
+  .subtext {
+    color: #52525b;
+    font-size: 15px;
+  }
+
+  .subtext:dark {
+    color: #94a3b8;
+  }
+
+  .section-box {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 14px;
+    background-color: rgba(15, 23, 42, 0.72);
+  }
+
+  .games-scroll {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .games-page {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .grid-row {
+    flex-direction: row;
+    flex-shrink: 0;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .game-card {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-shrink: 0;
+    min-width: 0;
+    height: auto;
+    padding: 14px;
+    border-radius: 12px;
+    background-color: #1e293b;
+  }
+
+  .game-card-soon {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-shrink: 0;
+    min-width: 0;
+    height: auto;
+    padding: 14px;
+    border-radius: 12px;
+    background-color: rgba(30, 41, 59, 0.45);
+    opacity: 0.55;
+  }
+
+  .game-card-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .card-thumb-img {
+    align-self: stretch;
+    height: 132px;
+  }
+
+  .game-title {
+    color: #f8fafc;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .game-sub {
+    color: #94a3b8;
+    font-size: 14px;
+  }
+
+  .divider {
+    flex-shrink: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(148, 163, 184, 0.35);
+    margin-top: 4px;
+    margin-bottom: 2px;
+  }
+
+  .soon-row {
+    flex-shrink: 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .soon-heading {
+    color: #cbd5e1;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .keypad-grid {
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .keypad-row {
+    flex-direction: row;
+    gap: 4px;
+    flex-shrink: 0;
+    justify-content: center;
+  }
+
+  .key-btn {
+    width: 64px;
+    justify-content: center;
+  }
+
+  .alpha-key-btn {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 0px;
+  }
+
+  .code-display {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #38bdf8;
+    padding: 6px;
+  }
+
+  .name-preview {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    min-width: 240px;
+    text-align: center;
+  }
+
+  .players-list {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .player-line {
+    color: #e2e8f0;
+    font-size: 14px;
+  }
+
+  .action-btn {
+    min-width: 124px;
+  }
+
+</style>
+
+<Panel id="HubRootPanel" class="hub-root">
+  <!-- Top Header (Always visible, including when minimized) -->
+  <div id="HeaderBar" class="header-row">
+    <div id="TitleCol" class="title-col">
+      <div id="HubTitle" class="brand-title">MIND CLASH XR</div>
+      <div id="BrandSubtitle" class="brand-subtitle">Spatial Cognitive Puzzles</div>
+    </div>
+    <div class="row">
+      <Button id="Btn_Recenter" class="action-btn">
+        <ButtonIcon>
+          <RotateCcw></RotateCcw>
+        </ButtonIcon>
+        <ButtonLabel>Recenter</ButtonLabel>
+      </Button>
+      <Button id="Btn_ToggleMinimize" class="action-btn">
+        <ButtonIcon>
+          <Minimize2 id="Icon_Minimize"></Minimize2>
+          <Maximize2 id="Icon_Expand" style="display: none"></Maximize2>
+        </ButtonIcon>
+        <ButtonLabel id="MinimizeLabel">Minimize</ButtonLabel>
+      </Button>
+      <Button id="Btn_XR" class="action-btn">
+        <ButtonIcon>
+          <RectangleGoggles></RectangleGoggles>
+        </ButtonIcon>
+        <ButtonLabel>Enter XR</ButtonLabel>
+      </Button>
+      <Button id="Btn_ExitXR" class="action-btn" style="display: none">
+        <ButtonIcon>
+          <LogIn></LogIn>
+        </ButtonIcon>
+        <ButtonLabel>Exit XR</ButtonLabel>
+      </Button>
+    </div>
+  </div>
+
+  <!-- Collapsible Hub Body -->
+  <div id="HubBody" class="hub-body">
+    <!-- Scrollable Game Selection Grid -->
+    <div id="HubGamesSection" class="section-box">
+      <div id="GamesScroll" class="games-scroll">
+        <!-- Page 0: Active 4 Puzzle Modules -->
+        <div id="Page_Active" class="games-page">
+          <div class="grid-row">
+            <Button id="Btn_Game_Ring" class="game-card">
+              <div class="game-card-inner">
+                <img id="Thumb_1" src="/ui/hoop-sort.jpg" class="card-thumb-img" />
+                <div class="game-title">Hoop Sort</div>
+                <div class="game-sub">Sort hoops by color on pegs</div>
+              </div>
+            </Button>
+            <Button id="Btn_Game_Rope" class="game-card">
+              <div class="game-card-inner">
+                <img id="Thumb_0" src="/ui/rope-untangle.jpg" class="card-thumb-img" />
+                <div class="game-title">Rope Untangle</div>
+                <div class="game-sub">Untangle crossing 3D ropes</div>
+              </div>
+            </Button>
+          </div>
+
+          <div class="grid-row">
+            <Button id="Btn_Game_Audio" class="game-card">
+              <div class="game-card-inner">
+                <img id="Thumb_2" src="/ui/audio-memory.jpg" class="card-thumb-img" />
+                <div class="game-title">Audio Memory</div>
+                <div class="game-sub">Repeat spatial sound cues</div>
+              </div>
+            </Button>
+            <Button id="Btn_Game_Arrow" class="game-card">
+              <div class="game-card-inner">
+                <img id="Thumb_3" src="/ui/block-fill.jpg" class="card-thumb-img" />
+                <div class="game-title">Block Fill</div>
+                <div class="game-sub">Draw one path, fill every tile</div>
+              </div>
+            </Button>
+          </div>
+
+        </div>
+
+        <!-- Page 1: Separator + Centered Bigger Coming Soon -->
+        <div id="Page_Soon" class="games-page" style="display: none">
+          <div class="divider"></div>
+          <div class="soon-row">
+            <div class="soon-heading">COMING SOON</div>
+          </div>
+
+          <!-- 4 Inactive Upcoming Puzzle Cards -->
+          <div class="grid-row">
+            <div class="game-card-soon">
+              <div class="game-card-inner">
+                <img id="Thumb_4" src="/ui/fluffdoku.jpg" class="card-thumb-img" />
+                <div class="game-title">Fluffdoku</div>
+                <div class="game-sub">Reveal where fluffy characters are hiding</div>
+              </div>
+            </div>
+            <div class="game-card-soon">
+              <div class="game-card-inner">
+                <img id="Thumb_5" src="/ui/arrow-escape.jpg" class="card-thumb-img" />
+                <div class="game-title">Arrow Escape</div>
+                <div class="game-sub">Free the arrows and clear the 3D cube</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="game-card-soon">
+              <div class="game-card-inner">
+                <img id="Thumb_6" src="/ui/color-connect.jpg" class="card-thumb-img" />
+                <div class="game-title">Color Connect</div>
+                <div class="game-sub">Connect matching color nodes</div>
+              </div>
+            </div>
+            <div class="game-card-soon">
+              <div class="game-card-inner">
+                <img id="Thumb_7" src="/ui/sliding-cards.jpg" class="card-thumb-img" />
+                <div class="game-title">Sliding Cards</div>
+                <div class="game-sub">Slide tiles to assemble the image</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Button id="Btn_PageToggle" class="action-btn">
+        <ButtonIcon>
+          <ChevronDown id="Icon_PageDown"></ChevronDown>
+        </ButtonIcon>
+        <ButtonIcon>
+          <ChevronUp id="Icon_PageUp" style="display: none"></ChevronUp>
+        </ButtonIcon>
+        <ButtonLabel id="PageToggleLabel">Coming Soon</ButtonLabel>
+      </Button>
+    </div>
+
+    <!-- Guest Waiting Bar (Shown when non-host joins room with no active game) -->
+    <div id="GuestWaitingSection" class="section-box" style="display: none">
+      <div class="heading">Waiting for Host</div>
+      <div class="subtext">
+        Connected to room. The host controls game selection.
+      </div>
+    </div>
+
+    <!-- Active Game Bar (Shown when a mini-game is active) -->
+    <div id="ActiveGameSection" class="section-box" style="display: none">
+      <div class="header-row">
+        <div id="ActiveGameTitle" class="heading">Rope Untangle</div>
+        <Button id="Btn_BackToHub" class="action-btn">
+          <ButtonIcon>
+            <ArrowLeft></ArrowLeft>
+          </ButtonIcon>
+          <ButtonLabel>Back to Hub</ButtonLabel>
+        </Button>
+      </div>
+      <div id="ActiveGameHint" class="subtext">
+        Module initialized on tabletop. Host controls switching.
+      </div>
+    </div>
+
+    <!-- Multiplayer Section -->
+    <div id="MultiplayerBar" class="section-box">
+      <div id="SoloInviteRow" class="header-row">
+        <div class="subtext">Play solo now or invite up to 4 players via P2P</div>
+        <div class="row">
+          <Button id="Btn_HostRoom" class="action-btn">
+            <ButtonIcon>
+              <Users></Users>
+            </ButtonIcon>
+            <ButtonLabel>Host Room</ButtonLabel>
+          </Button>
+          <Button id="Btn_OpenKeypad" class="action-btn">
+            <ButtonIcon>
+              <UserPlus></UserPlus>
+            </ButtonIcon>
+            <ButtonLabel>Join Room</ButtonLabel>
+          </Button>
+        </div>
+      </div>
+
+      <div id="ConnectedRoomSection" class="players-list" style="display: none">
+        <div class="header-row">
+          <div id="RoomInfoText" class="heading">Room 0000 (1/4)</div>
+          <div class="row">
+            <Button id="Btn_EditNickname" class="action-btn">
+              <ButtonIcon>
+                <User></User>
+              </ButtonIcon>
+              <ButtonLabel id="LocalNameLabel">Astra-10</ButtonLabel>
+            </Button>
+            <Button id="Btn_ToggleMute">
+              <ButtonIcon>
+                <Mic id="Icon_MicOn"></Mic>
+                <MicOff id="Icon_MicOff" style="display: none"></MicOff>
+              </ButtonIcon>
+              <ButtonLabel>Mic</ButtonLabel>
+            </Button>
+            <Button id="Btn_LeaveRoom">
+              <ButtonLabel>Leave</ButtonLabel>
+            </Button>
+          </div>
+        </div>
+
+        <!-- Spatial VR + Desktop Virtual Keyboard for Nickname Entry -->
+        <div id="NicknameEditRow" class="keypad-grid" style="display: none">
+          <div id="NicknamePreviewText" class="name-preview">Astra-10</div>
+          <div class="keypad-row">
+            <Button id="NKey_Q" class="alpha-key-btn">
+              <ButtonLabel>Q</ButtonLabel>
+            </Button>
+            <Button id="NKey_W" class="alpha-key-btn">
+              <ButtonLabel>W</ButtonLabel>
+            </Button>
+            <Button id="NKey_E" class="alpha-key-btn">
+              <ButtonLabel>E</ButtonLabel>
+            </Button>
+            <Button id="NKey_R" class="alpha-key-btn">
+              <ButtonLabel>R</ButtonLabel>
+            </Button>
+            <Button id="NKey_T" class="alpha-key-btn">
+              <ButtonLabel>T</ButtonLabel>
+            </Button>
+            <Button id="NKey_Y" class="alpha-key-btn">
+              <ButtonLabel>Y</ButtonLabel>
+            </Button>
+            <Button id="NKey_U" class="alpha-key-btn">
+              <ButtonLabel>U</ButtonLabel>
+            </Button>
+            <Button id="NKey_I" class="alpha-key-btn">
+              <ButtonLabel>I</ButtonLabel>
+            </Button>
+            <Button id="NKey_O" class="alpha-key-btn">
+              <ButtonLabel>O</ButtonLabel>
+            </Button>
+            <Button id="NKey_P" class="alpha-key-btn">
+              <ButtonLabel>P</ButtonLabel>
+            </Button>
+          </div>
+          <div class="keypad-row">
+            <Button id="NKey_A" class="alpha-key-btn">
+              <ButtonLabel>A</ButtonLabel>
+            </Button>
+            <Button id="NKey_S" class="alpha-key-btn">
+              <ButtonLabel>S</ButtonLabel>
+            </Button>
+            <Button id="NKey_D" class="alpha-key-btn">
+              <ButtonLabel>D</ButtonLabel>
+            </Button>
+            <Button id="NKey_F" class="alpha-key-btn">
+              <ButtonLabel>F</ButtonLabel>
+            </Button>
+            <Button id="NKey_G" class="alpha-key-btn">
+              <ButtonLabel>G</ButtonLabel>
+            </Button>
+            <Button id="NKey_H" class="alpha-key-btn">
+              <ButtonLabel>H</ButtonLabel>
+            </Button>
+            <Button id="NKey_J" class="alpha-key-btn">
+              <ButtonLabel>J</ButtonLabel>
+            </Button>
+            <Button id="NKey_K" class="alpha-key-btn">
+              <ButtonLabel>K</ButtonLabel>
+            </Button>
+            <Button id="NKey_L" class="alpha-key-btn">
+              <ButtonLabel>L</ButtonLabel>
+            </Button>
+            <Button id="NKey_Dash" class="alpha-key-btn">
+              <ButtonLabel>-</ButtonLabel>
+            </Button>
+          </div>
+          <div class="keypad-row">
+            <Button id="NKey_Z" class="alpha-key-btn">
+              <ButtonLabel>Z</ButtonLabel>
+            </Button>
+            <Button id="NKey_X" class="alpha-key-btn">
+              <ButtonLabel>X</ButtonLabel>
+            </Button>
+            <Button id="NKey_C" class="alpha-key-btn">
+              <ButtonLabel>C</ButtonLabel>
+            </Button>
+            <Button id="NKey_V" class="alpha-key-btn">
+              <ButtonLabel>V</ButtonLabel>
+            </Button>
+            <Button id="NKey_B" class="alpha-key-btn">
+              <ButtonLabel>B</ButtonLabel>
+            </Button>
+            <Button id="NKey_N" class="alpha-key-btn">
+              <ButtonLabel>N</ButtonLabel>
+            </Button>
+            <Button id="NKey_M" class="alpha-key-btn">
+              <ButtonLabel>M</ButtonLabel>
+            </Button>
+            <Button id="NKey_Del" class="alpha-key-btn">
+              <ButtonLabel>DEL</ButtonLabel>
+            </Button>
+            <Button id="NKey_Clr" class="alpha-key-btn">
+              <ButtonLabel>CLR</ButtonLabel>
+            </Button>
+          </div>
+          <div class="keypad-row">
+            <Button id="Btn_SaveNickname" class="action-btn">
+              <ButtonLabel>Save</ButtonLabel>
+            </Button>
+            <Button id="Btn_CancelNickname" class="action-btn">
+              <ButtonLabel>Cancel</ButtonLabel>
+            </Button>
+          </div>
+        </div>
+
+        <div id="PlayersRosterText" class="player-line">Players: Astra-10 (Host)</div>
+      </div>
+
+      <!-- Spatial 0-9 Pinch Keypad for Joining by Code -->
+      <div id="KeypadSection" class="keypad-grid" style="display: none">
+        <div id="KeypadCodeText" class="code-display">----</div>
+        <div class="keypad-row">
+          <Button id="Key_1" class="key-btn">
+            <ButtonLabel>1</ButtonLabel>
+          </Button>
+          <Button id="Key_2" class="key-btn">
+            <ButtonLabel>2</ButtonLabel>
+          </Button>
+          <Button id="Key_3" class="key-btn">
+            <ButtonLabel>3</ButtonLabel>
+          </Button>
+          <Button id="Key_4" class="key-btn">
+            <ButtonLabel>4</ButtonLabel>
+          </Button>
+          <Button id="Key_5" class="key-btn">
+            <ButtonLabel>5</ButtonLabel>
+          </Button>
+        </div>
+        <div class="keypad-row">
+          <Button id="Key_6" class="key-btn">
+            <ButtonLabel>6</ButtonLabel>
+          </Button>
+          <Button id="Key_7" class="key-btn">
+            <ButtonLabel>7</ButtonLabel>
+          </Button>
+          <Button id="Key_8" class="key-btn">
+            <ButtonLabel>8</ButtonLabel>
+          </Button>
+          <Button id="Key_9" class="key-btn">
+            <ButtonLabel>9</ButtonLabel>
+          </Button>
+          <Button id="Key_0" class="key-btn">
+            <ButtonLabel>0</ButtonLabel>
+          </Button>
+        </div>
+        <div class="keypad-row">
+          <Button id="Key_Del">
+            <ButtonLabel>DEL</ButtonLabel>
+          </Button>
+          <Button id="Key_Join" class="action-btn">
+            <ButtonLabel>JOIN ROOM</ButtonLabel>
+          </Button>
+          <Button id="Key_Cancel">
+            <ButtonLabel>CANCEL</ButtonLabel>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Panel>
