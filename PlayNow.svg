@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="150" viewBox="0 0 900 150" role="img" aria-label="Play Now">
+  <defs>
+    <filter id="shadow" x="-10%" y="-30%" width="120%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#080d1a" flood-opacity=".55"/>
+    </filter>
+  </defs>
+  <rect x="0" y="0" width="900" height="126" rx="8" fill="#f8f8fb" filter="url(#shadow)"/>
+  <circle cx="332" cy="63" r="27" fill="#1f2937"/>
+  <path d="M322 50 L347 63 L322 76 Z" fill="#ffffff"/>
+  <text x="485" y="63" fill="#111827" font-family="'Segoe UI', Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-1" text-anchor="middle" textLength="220" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">Play Now</text>
+</svg>
