@@ -280,7 +280,7 @@
           <div class="grid-row">
             <Button id="Btn_Game_Ring" class="game-card">
               <div class="game-card-inner">
-                <img id="Thumb_1" src="/ui/hoop-sort.jpg" class="card-thumb-img" />
+                <img id="Thumb_1" src="./ui/hoop-sort.jpg" class="card-thumb-img" />
                 <div class="game-title">Hoop Sort</div>
                 <div class="game-sub">Sort hoops by color on pegs</div>
               </div>
@@ -297,14 +297,14 @@
           <div class="grid-row">
             <Button id="Btn_Game_Audio" class="game-card">
               <div class="game-card-inner">
-                <img id="Thumb_2" src="/ui/audio-memory.jpg" class="card-thumb-img" />
+                <img id="Thumb_2" src="./ui/audio-memory.jpg" class="card-thumb-img" />
                 <div class="game-title">Audio Memory</div>
                 <div class="game-sub">Repeat spatial sound cues</div>
               </div>
             </Button>
             <Button id="Btn_Game_Arrow" class="game-card">
               <div class="game-card-inner">
-                <img id="Thumb_3" src="/ui/block-fill.jpg" class="card-thumb-img" />
+                <img id="Thumb_3" src="./ui/block-fill.jpg" class="card-thumb-img" />
                 <div class="game-title">Block Fill</div>
                 <div class="game-sub">Draw one path, fill every tile</div>
               </div>
@@ -324,14 +324,14 @@
           <div class="grid-row">
             <div class="game-card-soon">
               <div class="game-card-inner">
-                <img id="Thumb_4" src="/ui/fluffdoku.jpg" class="card-thumb-img" />
+                <img id="Thumb_4" src="./ui/fluffdoku.jpg" class="card-thumb-img" />
                 <div class="game-title">Fluffdoku</div>
                 <div class="game-sub">Reveal where fluffy characters are hiding</div>
               </div>
             </div>
             <div class="game-card-soon">
               <div class="game-card-inner">
-                <img id="Thumb_5" src="/ui/arrow-escape.jpg" class="card-thumb-img" />
+                <img id="Thumb_5" src="./ui/arrow-escape.jpg" class="card-thumb-img" />
                 <div class="game-title">Arrow Escape</div>
                 <div class="game-sub">Free the arrows and clear the 3D cube</div>
               </div>
@@ -341,14 +341,14 @@
           <div class="grid-row">
             <div class="game-card-soon">
               <div class="game-card-inner">
-                <img id="Thumb_6" src="/ui/color-connect.jpg" class="card-thumb-img" />
+                <img id="Thumb_6" src="./ui/color-connect.jpg" class="card-thumb-img" />
                 <div class="game-title">Color Connect</div>
                 <div class="game-sub">Connect matching color nodes</div>
               </div>
             </div>
             <div class="game-card-soon">
               <div class="game-card-inner">
-                <img id="Thumb_7" src="/ui/sliding-cards.jpg" class="card-thumb-img" />
+                <img id="Thumb_7" src="./ui/sliding-cards.jpg" class="card-thumb-img" />
                 <div class="game-title">Sliding Cards</div>
                 <div class="game-sub">Slide tiles to assemble the image</div>
               </div>
